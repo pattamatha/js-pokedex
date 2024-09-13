@@ -1,0 +1,3 @@
+#!/bin/bash
+# This script is used to start the development server for your SvelteKit project.
+yarn run dev
