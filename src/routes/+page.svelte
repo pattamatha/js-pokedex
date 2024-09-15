@@ -6,6 +6,7 @@
     import type { IndexMonster } from "./+page";
     import { goto } from "$app/navigation";
     import Monster from "./Monster.svelte";
+	import { count } from "$lib/stores";
 
 	export let data: PageData;
 	
