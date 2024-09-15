@@ -1,3 +1,4 @@
-import { writable, derived} from "svelte/store";
-export let count = writable(0);
-export const doubleCount = derived([count, otherProperty], ([c, o]) => c * 2);
+import { writable, type Writable } from "svelte/store";
+import type { IndexMonster } from "../routes/+page";
+
+export const caughtMonsters: Writable<IndexMonster[]> = writable([]);

@@ -2,17 +2,26 @@
     import { goto } from "$app/navigation";
     import { page } from "$app/stores";
     import type { IndexMonster } from "./+page";
+	import { caughtMonsters } from "$lib/stores";
 
     export let monster: IndexMonster;
-    export let updateSearchParams: (key: string, value: string) => void;
-    export let isInteractive = false;
+    //export let updateSearchParams: (key: string, value: string) => void;
+
+	const catchMonster = () => {
+		console.log("catching monster", monster);
+		caughtMonsters.update((monsters) => {
+			return [...monsters, monster];
+		});
+	};
 </script>
 
 
 
 
 <div class="monster">
-    <div on:click={() => isInteractive? updateSearchParams('monsterId', monster.id) : () => {}}>
+    <!-- svelte-ignore a11y-click-events-have-key-events -->
+    <!-- svelte-ignore a11y-no-static-element-interactions -->
+    <div on:click={catchMonster}>
         <div class="monster-content">
             <img class="monster-image" src={monster.image} alt="monster.name"/>
             {monster.name}
@@ -21,11 +30,6 @@
             {monster.id}
         </div>
     </div>
-    {#if isInteractive}
-        <div on:click={() => updateSearchParams('monsterId2', monster.id)}>
-            add monster 2
-        </div>
-    {/if}
     
 </div>
 

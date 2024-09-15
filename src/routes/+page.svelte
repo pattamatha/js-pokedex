@@ -6,8 +6,6 @@
     import type { IndexMonster } from "./+page";
     import { goto } from "$app/navigation";
     import Monster from "./Monster.svelte";
-	import { count } from "$lib/stores";
-
 	export let data: PageData;
 	
 	let seachString = "";
@@ -18,11 +16,6 @@
 	$: selectedMonsters = data.monsters.filter((monster) => {
 		return  monster.name.toLowerCase().includes(seachString.toLowerCase());
 	});
-
-	$: monsterId = $page.url.searchParams.get("monsterId") || '';
-	$: monster = data.monsters.find(monster => monster.id === monsterId);
-	$: monsterId2 = $page.url.searchParams.get("monsterId2") || '';
-	$: monster2 = data.monsters.find(monster => monster.id === monsterId2);
 
 	$: selectedGenerationId = $page.url.searchParams.get("generation_id") || '';
 
@@ -42,20 +35,6 @@
 
 
 <!-- ?-----------------HTML------------------- -->
-{#if monster}
-	<Monster
-		monster = {monster}
-		updateSearchParams = {updateSearchParams}
-	/>
-{/if}
-{#if monster2}
-	<Monster
-		monster = {monster2}
-		updateSearchParams = {updateSearchParams}
-	/>
-{/if}
-
-
 
 <!-- catagories -->
 <div class="generations">
@@ -85,8 +64,6 @@
 	{#each selectedMonsters as monster, i (monster.id)}
 		<Monster
 			monster = {monster}
-			updateSearchParams = {updateSearchParams}
-			isInteractive = {true}
 		/>
 	{/each}
  </div>
