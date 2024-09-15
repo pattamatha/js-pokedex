@@ -33,3 +33,4 @@ export const load =  (async ({fetch}) => {
     }
 
 }) satisfies PageLoad
+

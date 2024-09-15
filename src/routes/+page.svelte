@@ -9,6 +9,15 @@
 
 	export let data: PageData;
 	
+	let seachString = "";
+	let form = {
+		searchString: ""
+	};
+
+	$: selectedMonsters = data.monsters.filter((monster) => {
+		return  monster.name.toLowerCase().includes(seachString.toLowerCase());
+	});
+
 	$: monsterId = $page.url.searchParams.get("monsterId") || '';
 	$: monster = data.monsters.find(monster => monster.id === monsterId);
 	$: monsterId2 = $page.url.searchParams.get("monsterId2") || '';
@@ -20,6 +29,11 @@
 		searchParams.set(key, value);
 		goto (`/?${searchParams.toString()}`);
 	};
+
+	const submitSearch = (e: Event) => {
+		seachString = form.searchString;
+	};
+
 </script>
 
 
@@ -47,10 +61,16 @@
 	{/each}
 </div>
 
+<!-- input -->
+ <form class="search-form" on:submit={submitSearch}> 
+	<input class="search-field" type="text" bind:value={form.searchString} placeholder="search ..">
+	<input type="submit" value="search">
+ </form>
+
 
 <!-- pokemon card -->
  <div class="monsters">
-	{#each data.monsters as monster, i (monster.id)}
+	{#each selectedMonsters as monster, i (monster.id)}
 		<Monster
 			monster = {monster}
 			updateSearchParams = {updateSearchParams}
@@ -90,6 +110,25 @@
 		flex-direction: row;
 		flex-wrap: wrap;
 		justify-content: center;
+	}
+	.search-form {
+		display : flex;
+		justify-content: center;
+		margin: 16px 0;
+	}
+	.search-form input[type="text"] {
+		width: 200px;
+		padding: 5px 10px;
+		border: 1px solid #ccc;
+		border-radius: 6px;
+	}
+	.search-form input[type="submit"] {
+		padding: 2px 12px;
+		background-color: black;
+		border: 1px solid #ccc;
+		border-radius: 6px;
+		color: white;
+		margin-left: 10px;
 	}
 	
 </style>
